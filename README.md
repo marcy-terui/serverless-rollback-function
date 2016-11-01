@@ -19,6 +19,15 @@ A Serverless Framework Plugin to rollback the single function.
 npm install serverless-function-rollback
 ```
 
+# Configuration
+
+### serverless.yml
+
+```yaml
+plugins:
+  - serverless-function-rollback
+```
+
 # Usage
 
 ## Deploy the single function
