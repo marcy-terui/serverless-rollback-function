@@ -7,7 +7,7 @@ matrix:
     - node_js: '5.11'
     - node_js: '6.2'
       env:
-        - secure: "evRDob9sRCZln1RSaHwfQyg4lKr3AqvYQUYJ6KFXaUrDM6vuQFoYeuqQdQgNzVGXP9Jf/HLX5tVqWO+dcRlv3wIA0IWzn94uVzdxnzDXsvzRloPNQM4MmV/xfwkPuXLKjDhIBIo7lILV6AxjhxNQvXy43HjYuazxXB+ayhfGmkIrJ69FIeyzZnFE/Gm0VW1LiMjdCUt/MniEkg3qIhugAah1y9p5c8N0yDMkQ11DkXE8s8e1jIc1MKem+NVijI0FtQvBh+ua/CQNbq5PIJ3HXggDziDTiOq0NS/cbE+zIeh3k+VPt+RWCw+GPzpqWFOjiYdYCItjbOPPe9ebe6VQuDBhUmREf0f6coXlKTVCIKEqm7GGTcLU+giX3hQpLOLK8JiMlSOUEAeZS/rnH6RKPJxk423iO7oaVO9A4tUbyLR69bovWCpxY9D4fzsKthdZ44YzBbQiqD8hTdkyY1EIRQhhoISOcnoC7+jZTF5gicYth/cGjL1HTJ/JSwXtV9hyeKrDAi/y64JMWL5ggUFnXqPNbmYddjDq8SKDAstR1s9AbnkPjj1iVafi0pE4a5j5REYHqlsb/sLbSJ+ZHeo2QA5RzKB9i2kbtRWvbfmqhH4HE6Xnto7o1rVv21/b1vuvpe3q5+aR1gm6JoaX4gdbLdBYZK3tTLv8kcq28rpQVSw="
+        - secure: "mYv4BgSJFZHAuIVWZpuNpqj+8QfxZeUdfuaiBvHpRG1RKgYJu/ct7/IOmQFuXwcsxtW/qEDnRR2Ko+4UCEq11EELI2bKoSqi6kNANyvGX7JipeitXpwPT181aeDZOfg+Q0glacodZa3sVOgISdziOgbs4RiMamo/hzi/wgg3SG9pL8hur1paL6xL0Pn1IN07YnDK5C3Cijtgn6IeUsXehdcuVEmR48UqXtOJ66NnNc9GTxl7n+BAVBobZuAPxWKgcC2C95ks9wF2ySQItQlThnQL1mgrIqt9rnec17oTk+Ml9HXGeF+ZG3ioHhsMXWWvYh2MZxQqz94S42iTvzShg4BECuZfmwz4eAeUlRQaZIm9Z9BhV/5pW501F1Ku4i2kX9borYyZQLOEtLGPzSSFpQyWE4Sq82h/gNg070dNjNeBX9xLaJJcz5vex0yuKr42CGtiJc8s9q2u8E8aGv8yGBzHtEYLkBDyEo8TB666vBmGm0ZaKrKk6OVpGfxgj0EmE4euzrpS4JJp5JT4NcIlQOajYnh+NEpPYrTe3lB4C0DZ+AowThcZvqyKWhXe4Go9orpgG5KKxquC/wb3aH+XNhSzVXBpRlU7pfM++/rccepZJ5wYRecgTptTi/TaO8YwxQ32mWHBAtH+Y9csIpVnhU9PFV5M1lYPzIu3/wfo5AQ="
     - node_js: '6.2'
       env:
         - DISABLE_TESTS=true
