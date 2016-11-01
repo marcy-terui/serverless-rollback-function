@@ -1,4 +1,4 @@
-serverless-function-rollback
+serverless-rollback-function
 =======
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
@@ -16,7 +16,7 @@ A Serverless Framework Plugin to rollback the single function.
 # Installation
 
 ```sh
-npm install serverless-function-rollback
+npm install serverless-rollback-function
 ```
 
 # Configuration

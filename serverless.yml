@@ -72,4 +72,4 @@ functions:
 #       Value: "Some output value"
 
 plugins:
-  - serverless-function-rollback
+  - serverless-rollback-function

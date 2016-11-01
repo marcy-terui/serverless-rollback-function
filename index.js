@@ -5,7 +5,7 @@ const validate = require('serverless/lib/plugins/aws/lib/validate');
 const request = require('request');
 const bytes = require('bytes');
 
-class FunctionRollback {
+class RollbackFunction {
   constructor(serverless, options) {
     this.serverless = serverless;
     this.options = options || {};
@@ -156,4 +156,4 @@ class FunctionRollback {
 
 }
 
-module.exports = FunctionRollback;
+module.exports = RollbackFunction;

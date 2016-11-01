@@ -1,5 +1,5 @@
 {
-  "name": "serverless-function-rollback",
+  "name": "serverless-rollback-function",
   "version": "0.0.1",
   "description": "A Serverless Framework Plugin to rollback the single function",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marcy-terui/serverless-smart-deploy.git"
+    "url": "git+https://github.com/marcy-terui/serverless-rollback-function.git"
   },
   "keywords": [
     "serverless",
@@ -26,9 +26,9 @@
   "author": "Masashi Terui",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marcy-terui/serverless-smart-deploy/issues"
+    "url": "https://github.com/marcy-terui/serverless-rollback-function/issues"
   },
-  "homepage": "https://github.com/marcy-terui/serverless-smart-deploy#readme",
+  "homepage": "https://github.com/marcy-terui/serverless-rollback-function#readme",
   "dependencies": {
     "bluebird": "^3.4.6",
     "bytes": "^2.4.0",

@@ -6,11 +6,11 @@ const sinon = require('sinon');
 const Serverless = require('serverless/lib/Serverless');
 const AwsProvider = require('serverless/lib/plugins/aws/provider/awsProvider');
 const BbPromise = require('bluebird');
-const FunctionRollback = require('./../index');
+const RollbackFunction = require('./../index');
 
-describe('FunctionRollback', () => {
+describe('RollbackFunction', () => {
   let serverless;
-  let functionRollback;
+  let rollbackFunction;
 
   beforeEach(() => {
     serverless = new Serverless();
@@ -43,57 +43,57 @@ describe('FunctionRollback', () => {
     };
     serverless.init();
     serverless.setProvider('aws', new AwsProvider(serverless));
-    functionRollback = new FunctionRollback(serverless, options);
+    rollbackFunction = new RollbackFunction(serverless, options);
   });
 
   describe('#constructor()', () => {
-    it('should have hooks', () => expect(functionRollback.hooks).to.be.not.empty);
+    it('should have hooks', () => expect(rollbackFunction.hooks).to.be.not.empty);
 
     it('should set the provider variable to an instance of AwsProvider', () =>
-      expect(functionRollback.provider).to.be.instanceof(AwsProvider));
+      expect(rollbackFunction.provider).to.be.instanceof(AwsProvider));
 
     it('should set an empty options object if no options are given', () => {
-      const functionRollbackWithEmptyOptions = new FunctionRollback(serverless);
-      expect(functionRollbackWithEmptyOptions.options).to.deep.equal({});
+      const rollbackFunctionWithEmptyOptions = new RollbackFunction(serverless);
+      expect(rollbackFunctionWithEmptyOptions.options).to.deep.equal({});
     });
 
     it('should run promise chain in order to deploy', () => {
       const validateStub = sinon
-        .stub(functionRollback, 'validate').returns(BbPromise.resolve());
+        .stub(rollbackFunction, 'validate').returns(BbPromise.resolve());
       const publishVersionStub = sinon
-        .stub(functionRollback, 'publishVersion').returns(BbPromise.resolve());
+        .stub(rollbackFunction, 'publishVersion').returns(BbPromise.resolve());
       const setAliasStub = sinon
-        .stub(functionRollback, 'setAlias').returns(BbPromise.resolve());
+        .stub(rollbackFunction, 'setAlias').returns(BbPromise.resolve());
 
-      return functionRollback.hooks['before:deploy:function:deploy']().then(() => {
+      return rollbackFunction.hooks['before:deploy:function:deploy']().then(() => {
         expect(validateStub.calledOnce).to.equal(true);
         expect(publishVersionStub.calledAfter(validateStub))
           .to.equal(true);
         expect(setAliasStub.calledAfter(publishVersionStub))
           .to.equal(true);
 
-        functionRollback.publishVersion.restore();
-        functionRollback.setAlias.restore();
+        rollbackFunction.publishVersion.restore();
+        rollbackFunction.setAlias.restore();
       });
     });
 
     it('should run promise chain in order to rollback', () => {
       const validateStub = sinon
-        .stub(functionRollback, 'validate').returns(BbPromise.resolve());
+        .stub(rollbackFunction, 'validate').returns(BbPromise.resolve());
       const getPreviousFunctionStub = sinon
-        .stub(functionRollback, 'getPreviousFunction').returns(BbPromise.resolve());
+        .stub(rollbackFunction, 'getPreviousFunction').returns(BbPromise.resolve());
       const restoreFunctionStub = sinon
-        .stub(functionRollback, 'restoreFunction').returns(BbPromise.resolve());
+        .stub(rollbackFunction, 'restoreFunction').returns(BbPromise.resolve());
 
-      return functionRollback.hooks['rollback:function:rollback']().then(() => {
+      return rollbackFunction.hooks['rollback:function:rollback']().then(() => {
         expect(validateStub.calledOnce).to.equal(true);
         expect(getPreviousFunctionStub.calledAfter(validateStub))
           .to.equal(true);
         expect(restoreFunctionStub.calledAfter(getPreviousFunctionStub))
           .to.equal(true);
 
-        functionRollback.getPreviousFunction.restore();
-        functionRollback.restoreFunction.restore();
+        rollbackFunction.getPreviousFunction.restore();
+        rollbackFunction.restoreFunction.restore();
       });
     });
   });
@@ -101,9 +101,9 @@ describe('FunctionRollback', () => {
   describe('getPreviousFunction()', () => {
     it('should get the previous function', () => {
       const getFunctionStub = sinon
-        .stub(functionRollback.provider, 'request').returns(BbPromise.resolve());
+        .stub(rollbackFunction.provider, 'request').returns(BbPromise.resolve());
 
-      return functionRollback.getPreviousFunction().then(() => {
+      return rollbackFunction.getPreviousFunction().then(() => {
         expect(getFunctionStub.calledOnce).to.be.equal(true);
         expect(getFunctionStub.calledWithExactly(
           'Lambda',
@@ -112,10 +112,10 @@ describe('FunctionRollback', () => {
             FunctionName: 'aws-nodejs-dev-hello',
             Qualifier: 'aws-nodejs-dev-hello-rollback',
           },
-          functionRollback.options.stage,
-          functionRollback.options.region
+          rollbackFunction.options.stage,
+          rollbackFunction.options.region
         )).to.be.equal(true);
-        functionRollback.provider.request.restore();
+        rollbackFunction.provider.request.restore();
       });
     });
   });
@@ -123,12 +123,12 @@ describe('FunctionRollback', () => {
   describe('restoreFunction()', () => {
     it('should restore the function', () => {
       const requestStub = sinon
-        .stub(functionRollback, 'request').callsArgWith(1, null, null, 'foo');
+        .stub(rollbackFunction, 'request').callsArgWith(1, null, null, 'foo');
 
       const updateFunctionCodeStub = sinon
-        .stub(functionRollback.provider, 'request').returns(BbPromise.resolve());
+        .stub(rollbackFunction.provider, 'request').returns(BbPromise.resolve());
 
-      functionRollback.previousFunc = {
+      rollbackFunction.previousFunc = {
         Configuration: {
           CodeSize: 1024,
         },
@@ -137,7 +137,7 @@ describe('FunctionRollback', () => {
         },
       };
 
-      return functionRollback.restoreFunction().then(() => {
+      return rollbackFunction.restoreFunction().then(() => {
         expect(requestStub.calledOnce).to.be.equal(true);
         expect(updateFunctionCodeStub.calledOnce).to.be.equal(true);
         expect(updateFunctionCodeStub.calledWithExactly(
@@ -147,10 +147,10 @@ describe('FunctionRollback', () => {
             FunctionName: 'aws-nodejs-dev-hello',
             ZipFile: 'foo',
           },
-          functionRollback.options.stage,
-          functionRollback.options.region
+          rollbackFunction.options.stage,
+          rollbackFunction.options.region
         )).to.be.equal(true);
-        functionRollback.provider.request.restore();
+        rollbackFunction.provider.request.restore();
       });
     });
   });
@@ -158,9 +158,9 @@ describe('FunctionRollback', () => {
   describe('publishVersion()', () => {
     it('should publish a new version', () => {
       const publishVersionStub = sinon
-        .stub(functionRollback.provider, 'request').returns(BbPromise.resolve({ Version: 10 }));
+        .stub(rollbackFunction.provider, 'request').returns(BbPromise.resolve({ Version: 10 }));
 
-      return functionRollback.publishVersion().then(() => {
+      return rollbackFunction.publishVersion().then(() => {
         expect(publishVersionStub.calledOnce).to.be.equal(true);
         expect(publishVersionStub.calledWithExactly(
           'Lambda',
@@ -168,10 +168,10 @@ describe('FunctionRollback', () => {
           {
             FunctionName: 'aws-nodejs-dev-hello',
           },
-          functionRollback.options.stage,
-          functionRollback.options.region
+          rollbackFunction.options.stage,
+          rollbackFunction.options.region
         )).to.be.equal(true);
-        functionRollback.provider.request.restore();
+        rollbackFunction.provider.request.restore();
       });
     });
   });
@@ -179,13 +179,13 @@ describe('FunctionRollback', () => {
   describe('setAlias()', () => {
     it('should update the alias', () => {
       const setAliasStub = sinon
-        .stub(functionRollback.provider, 'request').returns(BbPromise.resolve());
+        .stub(rollbackFunction.provider, 'request').returns(BbPromise.resolve());
 
-      functionRollback.newVersion = {
+      rollbackFunction.newVersion = {
         Version: 10,
       };
 
-      return functionRollback.setAlias().then(() => {
+      return rollbackFunction.setAlias().then(() => {
         expect(setAliasStub.calledOnce).to.be.equal(true);
         expect(setAliasStub.calledWithExactly(
           'Lambda',
@@ -195,16 +195,16 @@ describe('FunctionRollback', () => {
             Name: 'aws-nodejs-dev-hello-rollback',
             FunctionVersion: 10,
           },
-          functionRollback.options.stage,
-          functionRollback.options.region
+          rollbackFunction.options.stage,
+          rollbackFunction.options.region
         )).to.be.equal(true);
-        functionRollback.provider.request.restore();
+        rollbackFunction.provider.request.restore();
       });
     });
 
     it('should create the alias', () => {
       const setAliasStub = sinon
-        .stub(functionRollback.provider, 'request').returns(BbPromise.resolve());
+        .stub(rollbackFunction.provider, 'request').returns(BbPromise.resolve());
 
       setAliasStub.withArgs(
         'Lambda',
@@ -214,15 +214,15 @@ describe('FunctionRollback', () => {
           Name: 'aws-nodejs-dev-hello-rollback',
           FunctionVersion: 10,
         },
-        functionRollback.options.stage,
-        functionRollback.options.region)
+        rollbackFunction.options.stage,
+        rollbackFunction.options.region)
       .returns(BbPromise.reject(new Error('test')));
 
-      functionRollback.newVersion = {
+      rollbackFunction.newVersion = {
         Version: 10,
       };
 
-      return functionRollback.setAlias().then(() => {
+      return rollbackFunction.setAlias().then(() => {
         expect(setAliasStub.calledTwice).to.be.equal(true);
         expect(setAliasStub.calledWithExactly(
           'Lambda',
@@ -232,10 +232,10 @@ describe('FunctionRollback', () => {
             Name: 'aws-nodejs-dev-hello-rollback',
             FunctionVersion: 10,
           },
-          functionRollback.options.stage,
-          functionRollback.options.region
+          rollbackFunction.options.stage,
+          rollbackFunction.options.region
         )).to.be.equal(true);
-        functionRollback.provider.request.restore();
+        rollbackFunction.provider.request.restore();
       });
     });
   });
