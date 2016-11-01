@@ -28,7 +28,7 @@ serverless deploy function -f $FUNCTION_NAME
 ## Rollback the single function
 
 ```sh
-serverless rolback function -f $FUNCTION_NAME
+serverless rollback function -f $FUNCTION_NAME
 ```
 
 Development
