@@ -1,8 +1,9 @@
 language: node_js
 
 matrix:
-  include:
+  allow_failures:
     - node_js: '4.4'
+  include:
     - node_js: '5.11'
     - node_js: '6.2'
       env:
@@ -19,7 +20,7 @@ install:
 
 script:
   - if [[ -z "$DISABLE_TESTS" ]]; then npm test; fi
-  - if [[ ! -z "$LINTING" ]]; then npm lint; fi
+  - if [[ ! -z "$LINTING" ]]; then npm run lint; fi
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
