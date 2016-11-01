@@ -2,8 +2,8 @@ serverless-rollback-function
 =======
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
-[![Build Status](https://travis-ci.org/marcy-terui/serverless-function-rollback.svg?branch=master)](https://travis-ci.org/marcy-terui/serverless-function-rollback)
-[![Coverage Status](https://coveralls.io/repos/github/marcy-terui/serverless-function-rollback/badge.svg?branch=master)](https://coveralls.io/github/marcy-terui/serverless-function-rollback?branch=master)
+[![Build Status](https://travis-ci.org/marcy-terui/serverless-rollback-function.svg?branch=master)](https://travis-ci.org/marcy-terui/serverless-rollback-function)
+[![Coverage Status](https://coveralls.io/repos/github/marcy-terui/serverless-rollback-function/badge.svg?branch=master)](https://coveralls.io/github/marcy-terui/serverless-rollback-function?branch=master)
 
 # Description
 
@@ -25,7 +25,7 @@ npm install serverless-rollback-function
 
 ```yaml
 plugins:
-  - serverless-function-rollback
+  - serverless-rollback-function
 ```
 
 # Usage
@@ -45,9 +45,9 @@ serverless rollback function -f $FUNCTION_NAME
 Development
 -----------
 
--   Source hosted at [GitHub](https://github.com/marcy-terui/serverless-function-rollback)
+-   Source hosted at [GitHub](https://github.com/marcy-terui/serverless-rollback-function)
 -   Report issues/questions/feature requests on [GitHub
-    Issues](https://github.com/marcy-terui/serverless-function-rollback/issues)
+    Issues](https://github.com/marcy-terui/serverless-rollback-function/issues)
 
 Pull requests are very welcome! Make sure your patches are well tested.
 Ideally create a topic branch for every separate change you make. For
@@ -67,4 +67,4 @@ Created and maintained by [Masashi Terui](https://github.com/marcy-terui) (<marc
 License
 -------
 
-MIT License (see [LICENSE](https://github.com/marcy-terui/serverless-function-rollback/blob/master/LICENSE.txt))
+MIT License (see [LICENSE](https://github.com/marcy-terui/serverless-rollback-function/blob/master/LICENSE.txt))
